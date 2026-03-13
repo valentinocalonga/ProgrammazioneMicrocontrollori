@@ -1,0 +1,23 @@
+# MPLAB build folders
+build/
+dist/
+debug/
+.generated_files/
+
+# MPLAB project internal stuff
+nbproject/
+
+# Logs
+*.log
+*.inx
+
+# Output binaries
+*.hex
+*.elf
+*.map
+
+# Makefile
+Makefile
+
+# macOS
+.DS_Store
