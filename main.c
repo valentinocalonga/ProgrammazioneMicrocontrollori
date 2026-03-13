@@ -54,7 +54,7 @@
  * 
  */
 
-#define DELAY 100000 //1sec used if no Timer is implemented
+#define DELAY 1000000 //1sec used if no Timer is implemented
 
 
 /* Init global variables here*/
