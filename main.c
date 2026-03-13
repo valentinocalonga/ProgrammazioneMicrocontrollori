@@ -79,6 +79,11 @@ void delay(int delay) {
 
 void accensioneLedEveryDELAY(void) 
 {   
+    /*
+     * Accende automaticamente i led, uno alla volta, aspettando il DELAY 
+     * definito nel main.c.
+     * Accensione da LED0 (destra) a LED7 (sinistra) e spegnimento successivo
+     */
     delay(DELAY);
     toggleLed(0);
 
@@ -106,6 +111,9 @@ void accensioneLedEveryDELAY(void)
 
 void accensioneLedOnSwitch(void)
 {
+    /*
+     * Accende il LED corrispondente allo SWItCH attivato
+     */
     LED0 = readSwitch(0);
     LED1 = readSwitch(1);
     LED2 = readSwitch(2);
@@ -124,12 +132,13 @@ void main()
 /* call init functions here */
     
     initLeds();
-    
     initSwitches();
 
 /* Endless loop */   
     while(1)    // forever loop
     {
+        // decommentare la funzione che si vuole utilizzare
+        
         accensioneLedEveryDELAY();
         // accensioneLedOnSwitch();
     }
