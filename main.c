@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <p32xxxx.h>
+#include <string.h>
+
 
 
 /* include user header file here*/
@@ -23,9 +25,8 @@
 
 #include "GPIO.h"
 #include "Uart.h"
-
-
-
+#include "Leds.h"
+#include "EasterEgg.h"
 
 /* Pragma definition */
 /*
@@ -56,7 +57,7 @@
  */
 
 #define DELAY 1000000 //1sec used if no Timer is implemented
-#define BAUDRATE 9600 //1sec used if no Timer is implemented
+#define BAUDRATE 9600 // baudrate da impostare su SerialTools
 
 
 /* Init global variables here*/
@@ -79,36 +80,38 @@ void delay(int delay) {
     while(delay--);
 }
 
-void accensioneLedEveryDELAY(void) 
+void GPIO_Serie1_es3_accensioneLedEveryDELAY(void) 
 {   
     /*
      * Accende automaticamente i led, uno alla volta, aspettando il DELAY 
      * definito nel main.c.
      * Accensione da LED0 (destra) a LED7 (sinistra) e spegnimento successivo
      */
-    delay(DELAY);
-    toggleLed(0);
+    while (1) {
+        delay(DELAY);
+        toggleLed(0);
 
-    delay(DELAY);
-    toggleLed(1);
+        delay(DELAY);
+        toggleLed(1);
 
-    delay(DELAY);
-    toggleLed(2);
+        delay(DELAY);
+        toggleLed(2);
 
-    delay(DELAY);
-    toggleLed(3);
+        delay(DELAY);
+        toggleLed(3);
 
-    delay(DELAY);
-    toggleLed(4);
+        delay(DELAY);
+        toggleLed(4);
 
-    delay(DELAY);
-    toggleLed(5);
+        delay(DELAY);
+        toggleLed(5);
 
-    delay(DELAY);
-    toggleLed(6);
+        delay(DELAY);
+        toggleLed(6);
 
-    delay(DELAY);
-    toggleLed(7);   
+        delay(DELAY);
+        toggleLed(7);  
+    }
 }
 
 unsigned char accensioneLedOnSwitch(void)
@@ -159,6 +162,14 @@ unsigned char accensioneLedOnSwitch(void)
     return swState;   // ritorna lo stato complessivo degli switch
 }
 
+void GPIO_Serie1_es4_accensioneLedOnSwitch(void) 
+{
+    while(1)    // forever loop
+    {
+       accensioneLedOnSwitch();
+    }
+}
+
 void UART_Slide3_Examples(void) {
     
     /* Delay counter */
@@ -175,7 +186,7 @@ void UART_Slide3_Examples(void) {
    
 }
 
-unsigned char UART_Serie3_es1(unsigned char previousState)
+unsigned char UART_Serie2_es1_SwitchToLedAndText(unsigned char previousState)
 {
     unsigned char currentState = accensioneLedOnSwitch();   // stato attuale
     unsigned char newOn = currentState & (~previousState);  // nuovi LED accesi
@@ -193,6 +204,65 @@ unsigned char UART_Serie3_es1(unsigned char previousState)
     return currentState;   // aggiorna lo stato precedente
 }
 
+void UART_Serie2_es1(void) {
+    unsigned char previousState = 0;
+    
+    while(1)    // forever loop
+    {
+        previousState = UART_Serie2_es1_SwitchToLedAndText(previousState);
+    }
+}
+
+void processCommand(char *cmd)
+{
+    int ledNumber;
+
+    /* controllo minimo sul formato: LEDx ... */
+    if(cmd[0] == 'L' && cmd[1] == 'E' && cmd[2] == 'D' &&
+       cmd[3] >= '0' && cmd[3] <= '7' && cmd[4] == ' ')
+    {
+        ledNumber = cmd[3] - '0';
+
+        if(strcmp(&cmd[5], "ON") == 0)
+        {
+            setLed(ledNumber, 1);
+            putU4_string("OK, LED");
+            putU4('0' + ledNumber);
+            putU4_string(" acceso\r\n");
+        }
+        else if(strcmp(&cmd[5], "OFF") == 0)
+        {
+            setLed(ledNumber, 0);
+            putU4_string("OK, LED");
+            putU4('0' + ledNumber);
+            putU4_string(" spento\r\n");
+        }
+        else
+        {
+            putU4_string("Comando non valido\r\n");
+        }
+    }
+    else
+    {
+        easter01();
+    }
+}
+
+void UART_Serie2_es2(void) {
+    putU4_string("SERIE 2 - ESERCIZIO 2.\r\n");
+    putU4_string("UART4 pronta. Inserire comando:\r\n");
+    
+    while(1)
+    {
+        char *cmd = getString();    // legge l'intera riga da terminale
+        
+        if(cmd[0] != '\0')
+        { 
+            processCommand(cmd);    // interpreta il comando ed esegue l'azione
+        }
+    }
+}
+
 /* Main function */
 void main()
 {
@@ -205,17 +275,17 @@ void main()
     initUART(BAUDRATE);
 
 /* Endless loop */   
-    unsigned char previousState = 0;
+    /* 
+    * while(1)    // forever loop
+    * {
+    * }
+    */
     
-    while(1)    // forever loop
-    {
-        // decommentare la funzione che si vuole utilizzare        
-        //accensioneLedEveryDELAY();
-        //accensioneLedOnSwitch();
-        previousState = UART_Serie3_es1(previousState);
-    }
-    
-    //UART_Slide3_Examples();
+    // GPIO_Serie1_es4_accensioneLedOnSwitch();
+    // GPIO_Serie1_es3_accensioneLedEveryDELAY();
+    // UART_Slide3_Examples();
+    // UART_Serie2_es1();
+    UART_Serie2_es2();
 }
 
 

@@ -7,6 +7,12 @@
 #include <p32xxxx.h>
 #include "Uart.h"
 
+
+// per Serie2_ProMC - Esercizio 2
+#define UART_BUFFER_SIZE 32
+/* buffer globale per la ricezione della stringa */
+static char uartRxBuffer[UART_BUFFER_SIZE];
+
 /*
  * Dalle slide...
  */
@@ -83,5 +89,50 @@ void putU4_string(char szData[])
     while(*pData)
     {
         putU4((*(pData++)));
+    }
+}
+
+char* getString(void)
+/*
+ * Legge una stringa da UART4 fino a '\r' oppure '\n'.
+ * I caratteri ricevuti vengono salvati in un buffer globale (uartRxBuffer)
+ */
+{
+    int i = 0;
+    char c;
+
+    while(1)
+    {
+        c = getU4();
+
+        /* ignora CR/LF iniziali residui */
+        if(i == 0 && (c == '\r' || c == '\n'))
+        {
+            continue;
+        }
+
+        /* gestione backspace / delete */
+        if(c == '\b' || c == 127)
+        {
+            if(i > 0)
+            {
+                i--;
+                uartRxBuffer[i] = '\0';
+            }
+            continue;
+        }
+
+        /* fine comando */
+        if(c == '\r' || c == '\n')
+        {
+            uartRxBuffer[i] = '\0';
+            return uartRxBuffer;
+        }
+
+        /* salva il carattere se c'è spazio */
+        if(i < 31)
+        {
+            uartRxBuffer[i++] = c;
+        }
     }
 }
