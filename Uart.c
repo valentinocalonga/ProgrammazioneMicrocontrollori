@@ -9,9 +9,9 @@
 
 
 // per Serie2_ProMC - Esercizio 2
-#define UART_BUFFER_SIZE 32
+#define UART_BUFFER_SIZE 80
 /* buffer globale per la ricezione della stringa */
-static char uartRxBuffer[UART_BUFFER_SIZE];
+static char dataIn[UART_BUFFER_SIZE];
 
 /*
  * Dalle slide...
@@ -117,7 +117,7 @@ char* getString(void)
             if(i > 0)
             {
                 i--;
-                uartRxBuffer[i] = '\0';
+                dataIn[i] = '\0';
             }
             continue;
         }
@@ -125,14 +125,14 @@ char* getString(void)
         /* fine comando */
         if(c == '\r' || c == '\n')
         {
-            uartRxBuffer[i] = '\0';
-            return uartRxBuffer;
+            dataIn[i] = '\0';
+            return dataIn;
         }
 
         /* salva il carattere se c'è spazio */
-        if(i < 31)
+        if(i < (UART_BUFFER_SIZE - 1))
         {
-            uartRxBuffer[i++] = c;
+            dataIn[i++] = c;
         }
     }
 }

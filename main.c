@@ -281,6 +281,8 @@ void main()
     * }
     */
     
+    // decommentare la funzione che si vuole testare
+    
     // GPIO_Serie1_es4_accensioneLedOnSwitch();
     // GPIO_Serie1_es3_accensioneLedEveryDELAY();
     // UART_Slide3_Examples();
