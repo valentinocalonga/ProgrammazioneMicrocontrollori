@@ -4,13 +4,13 @@
  *
  * Created on Marzo 2026 */
 
+#include <p32xxxx.h>
 #include "Leds.h"
 #include "GPIO.h"
-#include <p32xxxx.h>
 
 void setLed(int ledNumber, int state)
 {
-    switch(ledNumber)
+    switch (ledNumber)
     {
         case 0: LED0 = state; break;
         case 1: LED1 = state; break;
@@ -20,6 +20,22 @@ void setLed(int ledNumber, int state)
         case 5: LED5 = state; break;
         case 6: LED6 = state; break;
         case 7: LED7 = state; break;
+        default: break;
+    }
+}
+
+void toggleLed(int ledNumber)
+{
+    switch (ledNumber)
+    {
+        case 0: LED0 = !LED0; break;
+        case 1: LED1 = !LED1; break;
+        case 2: LED2 = !LED2; break;
+        case 3: LED3 = !LED3; break;
+        case 4: LED4 = !LED4; break;
+        case 5: LED5 = !LED5; break;
+        case 6: LED6 = !LED6; break;
+        case 7: LED7 = !LED7; break;
         default: break;
     }
 }

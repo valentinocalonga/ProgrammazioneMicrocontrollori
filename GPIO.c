@@ -5,8 +5,6 @@
  *
  * Created on Marzo 2026 */
 
-#include <p32xxxx.h>
-
 #include "GPIO.h"
 
 void initLeds(void)
@@ -76,44 +74,6 @@ void togglePort(char port, int bit)
             LATGINV = mask;
             break;
 
-        default:
-            break;
-    }
-}
-
-void toggleLed(int led)
-{
-    /* Sfrutta le macro per fare il toggle di uno specifico LED
-     * Il numero del led (tra 0 e 7) viene passato alla funzione come intero
-     * 
-     * [uso:    toggleLed(1);  esegue il toggle del led LD1]
-     */
-    switch(led)
-    {
-        case 0:
-            LED0 = ~LED0;
-            break;
-        case 1:
-            LED1 = ~LED1;
-            break;
-        case 2:
-            LED2 = ~LED2;
-            break;
-        case 3:
-            LED3 = ~LED3;
-            break;
-        case 4:
-            LED4 = ~LED4;
-            break;
-        case 5:
-            LED5 = ~LED5;
-            break;
-        case 6:
-            LED6 = ~LED6;
-            break;
-        case 7:
-            LED7 = ~LED7;
-            break;
         default:
             break;
     }

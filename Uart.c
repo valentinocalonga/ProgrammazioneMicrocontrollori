@@ -83,12 +83,11 @@ char getU4( void)
     return U4RXREG; // read char from receive buffer
 } // getU4
 
-void putU4_string(char szData[])
+void putU4_string(const char *szData)
 {
-    char *pData = szData;
-    while(*pData)
+    while(*szData)
     {
-        putU4((*(pData++)));
+        putU4(*szData++);
     }
 }
 

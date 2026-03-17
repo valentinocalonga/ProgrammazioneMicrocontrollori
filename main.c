@@ -27,6 +27,9 @@
 #include "Uart.h"
 #include "Leds.h"
 #include "EasterEgg.h"
+#include "Pin.h"
+#include "Timer.h"
+#include "TIMER_Serie4_Es1_NOINTERRUPT.h"
 
 /* Pragma definition */
 /*
@@ -75,10 +78,6 @@
 
 
 /* Write function used in main.c*/
-
-void delay(int delay) {
-    while(delay--);
-}
 
 void GPIO_Serie1_es3_accensioneLedEveryDELAY(void) 
 {   
@@ -263,8 +262,19 @@ void UART_Serie2_es2(void) {
     }
 }
 
+void TIMER_Slide4_Examples() 
+{
+    initPins();
+    initTimer2();
+    while(1)
+    {
+        while ( TMR2 < (PR2 -1) );
+        LATAINV = 0x0002 ;
+    }
+}
+
 /* Main function */
-void main()
+int main()
 {
 /* init local variables here*/
 
@@ -287,7 +297,11 @@ void main()
     // GPIO_Serie1_es3_accensioneLedEveryDELAY();
     // UART_Slide3_Examples();
     // UART_Serie2_es1();
-    UART_Serie2_es2();
+    // UART_Serie2_es2();
+    // TIMER_Slide4_Examples();
+    
+    TIMER_Serie4_Es1_NOINTERRUPT();
+    return 0;
 }
 
 
