@@ -3,16 +3,17 @@
 
 ## 🚧 Project Status  
 ![WIP](https://img.shields.io/badge/WIP-in%20progress-yellow)
-![Status](https://img.shields.io/badge/status-educational%20project-yellow)
+![Learning](https://img.shields.io/badge/project-learning-blue)
+![Language](https://img.shields.io/badge/language-C99-blue)
+![MCU](https://img.shields.io/badge/MCU-PIC32MX370F512L-darkgreen)
+![Embedded](https://img.shields.io/badge/embedded-bare--metal-success)
+![UART](https://img.shields.io/badge/UART-polling-informational)
+![Timers](https://img.shields.io/badge/timers-16--bit%20%26%2032--bit-orange)
+![IDE](https://img.shields.io/badge/IDE-MPLAB%20X-lightgrey)
 
 This project is under active development and used for **educational purposes**.  
 Architecture, drivers and exercises are continuously evolving.
 
-![Language](https://img.shields.io/badge/language-C99-blue)
-![MCU](https://img.shields.io/badge/MCU-PIC32MX370-darkgreen)
-![Embedded](https://img.shields.io/badge/embedded-bare--metal-success)
-![Toolchain](https://img.shields.io/badge/compiler-XC32-orange)  
-![IDE](https://img.shields.io/badge/IDE-MPLAB%20X-lightgrey)  
 
 Embedded firmware project for **PIC32MX370F512L** featuring:
 
